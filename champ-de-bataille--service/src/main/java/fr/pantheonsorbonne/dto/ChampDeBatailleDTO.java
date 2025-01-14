@@ -1,4 +1,9 @@
 package fr.pantheonsorbonne.dto;
 
-public record ChampDeBatailleDTO() {
+public record ChampDeBatailleDTO(
+        String etat,
+        int nombreMorts,
+        int nombreBlesses
+) {
+
 }
