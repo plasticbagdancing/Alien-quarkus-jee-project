@@ -13,7 +13,7 @@ import java.net.URI;
 @Path("champDeBataille")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ChampDeBatailleResources {
+public class ChampDeBatailleRessources {
 
     private final ChampDeBatailleService champDeBatailleService;
 
@@ -34,3 +34,4 @@ public class ChampDeBatailleResources {
         champDeBatailleService.mettreAJourEtatChampDeBataille(champDeBatailleDTO);
         return Response.noContent().build();
     }
+}

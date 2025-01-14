@@ -1,10 +1,12 @@
 
-package fr.pantheonsorbonne.service;
-
-import fr.pantheonsorbonne.exception.ChampDeBatailleException;
+package fr.pantheonsorbonne.exception;
 import fr.pantheonsorbonne.dto.ChampDeBatailleDTO;
 
-public class ChampDeBatailleService extends RuntimeException {
+public class ChampDeBatailleException extends RuntimeException {
+
+    public ChampDeBatailleException(String s) {
+
+    }
 
     public void mettreAJourEtatChampDeBataille(ChampDeBatailleDTO champDeBatailleDTO) {
         if (champDeBatailleDTO.nombreMorts() < 0 || champDeBatailleDTO.nombreBlesses() < 0) {

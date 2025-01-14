@@ -3,7 +3,7 @@ package fr.pantheonsorbonne.service;
 import fr.pantheonsorbonne.dao.ChampDeBatailleDAO;
 import fr.pantheonsorbonne.dto.ChampDeBatailleDTO;
 import fr.pantheonsorbonne.entity.ChampDeBataille;
-import fr.pantheonsorbonne.exception.ChampDeBatailleNotFoundException;
+import fr.pantheonsorbonne.exception.ChampDeBatailleException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
