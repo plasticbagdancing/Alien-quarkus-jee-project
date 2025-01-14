@@ -1,15 +1,19 @@
-est ce bien ? package fr.pantheonsorbonne.resources;
+package fr.pantheonsorbonne.resources;
 
 import fr.pantheonsorbonne.dto.ChampDeBatailleDTO;
 import fr.pantheonsorbonne.service.ChampDeBatailleService;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
+import java.net.URI;
+
 
 @Path("champDeBataille")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ChampDeBatailleRessources {
+public class ChampDeBatailleResources {
 
     private final ChampDeBatailleService champDeBatailleService;
 
