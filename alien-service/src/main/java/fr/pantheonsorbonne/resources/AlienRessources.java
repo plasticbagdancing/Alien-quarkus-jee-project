@@ -1,15 +1,14 @@
 package fr.pantheonsorbonne.resources;
 
 import fr.pantheonsorbonne.dto.AlienDTO;
-import fr.pantheonsorbonne.entity.Alien;
 import fr.pantheonsorbonne.exception.AlienAlreadyExistWithTheSameGalacticRegistrationNumber;
+import fr.pantheonsorbonne.gateway.AlienGateway;
 import fr.pantheonsorbonne.service.Alienservice;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import javax.print.attribute.standard.Media;
 import java.net.URI;
 
 @Path("Alien")
@@ -17,9 +16,31 @@ public class AlienRessources {
     @Inject
     Alienservice alienservice;
 
+
+    @Inject
+    AlienGateway alienGateway;
+
+    @GET
+    @Path("/generate")
+    public Response generateAlien() {
+        alienGateway.sendRandomAlien();  // Appel à la méthode qui génère et envoie l'alien
+        return Response.ok("Alien généré et envoyé au champ de bataille !").build();
+    }
+
+    // Endpoint pour récupérer les statistiques des aliens générés
+    @GET
+    @Path("/stats")
+    @Produces("application/json")
+    public Response getAlienStats() {
+        String stats = AlienGateway.getAlienStats();  // Récupère les statistiques
+        return Response.ok(stats).build();
+    }
+
+    ///pas toucheeeeeeeeeeeeer
     // retourner un alien
     @GET
     @Path("{id}")
+
 
     // retourner le JSON
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,4 +70,5 @@ public class AlienRessources {
             );
         }
     }
+
 }
