@@ -32,11 +32,11 @@ public class AlienRessources {
     @Path("/stats")
     @Produces("application/json")
     public Response getAlienStats() {
-        String stats = AlienGateway.getAlienStats();  // Récupère les statistiques
+        String stats = alienGateway.getAlienStats();  // Appel sur l'instance injectée de AlienGateway
         return Response.ok(stats).build();
     }
 
-    ///pas toucheeeeeeeeeeeeer
+
     // retourner un alien
     @GET
     @Path("{id}")

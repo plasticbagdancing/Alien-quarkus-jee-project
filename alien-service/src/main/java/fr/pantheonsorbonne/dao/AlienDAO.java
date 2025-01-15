@@ -14,7 +14,7 @@ public class AlienDAO {
         return !grn.createQuery("select a from Alien a where a.galacticRegistrationNumber = :galacticRegistrationNumber")
                 .setParameter("galacticRegistrationNumber", galacticRegistrationNumber)
                 .getResultList().isEmpty();
-}
+    }
 
     public void saveAlien(Alien alien) {
         grn.persist(alien);
