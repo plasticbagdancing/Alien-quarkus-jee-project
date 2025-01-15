@@ -1,8 +1,6 @@
 package fr.pantheonsorbonne.camel;
 
 import org.apache.camel.builder.RouteBuilder;
-import fr.pantheonsorbonne.dto.AlienDTO;
-
 public class CamelRoutes extends RouteBuilder {
 
     @Override

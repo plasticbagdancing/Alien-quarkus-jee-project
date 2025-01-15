@@ -16,15 +16,14 @@ public class AlienRessources {
     @Inject
     Alienservice alienservice;
 
-
     @Inject
     AlienGateway alienGateway;
 
     @GET
     @Path("/generate")
     public Response generateAlien() {
-        alienGateway.sendRandomAlien();  // Appel à la méthode qui génère et envoie l'alien
-        return Response.ok("Alien généré et envoyé au champ de bataille !").build();
+        alienGateway.sendRandomAlien();  // Appel à la méthode qui génère et envoie l'alien et les stats
+        return Response.ok("Aliens générés et envoyés au champ de bataille avec leurs statistiques au service de détection !").build();
     }
 
     // Endpoint pour récupérer les statistiques des aliens générés
@@ -35,6 +34,7 @@ public class AlienRessources {
         String stats = alienGateway.getAlienStats();  // Appel sur l'instance injectée de AlienGateway
         return Response.ok(stats).build();
     }
+
 
 
     // retourner un alien

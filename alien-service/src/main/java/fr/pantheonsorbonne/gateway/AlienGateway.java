@@ -47,13 +47,20 @@ public class AlienGateway {
                     alliedAliens++;
                     break;
             }
-
-            // Log pour vérifier les statistiques
-            System.out.println("Total Aliens: " + totalAliens);
-            System.out.println("Hostile Aliens: " + hostileAliens);
-            System.out.println("Opportunist Aliens: " + opportunistAliens);
-            System.out.println("Allied Aliens: " + alliedAliens);
         }
+
+        // Après génération des aliens, envoyer les statistiques au service de détection
+        sendAlienStatsToDetection();
+    }
+
+    // Méthode pour envoyer les statistiques au service de détection
+    private void sendAlienStatsToDetection() {
+        // Créer un JSON avec les statistiques
+        String statsJson = String.format("{\"totalAliens\": %d, \"hostile\": %d, \"opportunist\": %d, \"allied\": %d}",
+                totalAliens, hostileAliens, opportunistAliens, alliedAliens);
+
+        // Envoi des statistiques via Camel au service de détection
+        producerTemplate.sendBody("direct:sendAlienStats", statsJson);
     }
 
     // Méthode pour récupérer les statistiques des aliens générés
