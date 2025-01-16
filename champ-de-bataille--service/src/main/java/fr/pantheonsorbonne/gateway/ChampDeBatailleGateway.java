@@ -1,4 +1,4 @@
 package fr.pantheonsorbonne.gateway;
 
-public class rien {
+public class ChampDeBatailleGateway {
 }

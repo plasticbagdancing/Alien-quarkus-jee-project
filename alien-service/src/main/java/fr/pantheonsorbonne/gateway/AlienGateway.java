@@ -1,30 +1,38 @@
 package fr.pantheonsorbonne.gateway;
 
+
 import fr.pantheonsorbonne.dto.AlienDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.ProducerTemplate;
 
+
 @ApplicationScoped
 public class AlienGateway {
 
+
     @Inject
     ProducerTemplate producerTemplate;
+
 
     private int totalAliens = 0;
     private int hostileAliens = 0;
     private int opportunistAliens = 0;
     private int alliedAliens = 0;
 
+
     // Méthode pour générer plusieurs aliens avec un minimum de 100 par type
     public void sendRandomAlien() {
         // Nombre d'aliens à générer par appel
         int numberOfAliensToGenerate = 100;  // Modifier ce nombre selon votre besoin (150, etc.)
 
+
         String[] types = {"hostile", "opportunist", "allied"};
+
 
         for (int i = 0; i < numberOfAliensToGenerate; i++) {
             String alienType = types[(int) (Math.random() * types.length)];  // Choisir un type d'alien aléatoire
+
 
             AlienDTO alien = new AlienDTO(
                     (long) (Math.random() * 1000),  // ID aléatoire
@@ -32,7 +40,9 @@ public class AlienGateway {
                     "GRN-" + (int) (Math.random() * 1000)  // Numéro d'enregistrement aléatoire
             );
 
+
             producerTemplate.sendBody("direct:sendAlien", alien); // Envoi de l'alien généré au champ de bataille
+
 
             // Mise à jour des compteurs
             totalAliens++;
@@ -49,19 +59,22 @@ public class AlienGateway {
             }
         }
 
+
         // Après génération des aliens, envoyer les statistiques au service de détection
-        sendAlienStatsToDetection();
+        sendAlienStatsToBattlefield();
     }
 
-    // Méthode pour envoyer les statistiques au service de détection
-    private void sendAlienStatsToDetection() {
-        // Créer un JSON avec les statistiques
+
+    private void sendAlienStatsToBattlefield() {
+        // Création d'un JSON avec les statistiques
         String statsJson = String.format("{\"totalAliens\": %d, \"hostile\": %d, \"opportunist\": %d, \"allied\": %d}",
                 totalAliens, hostileAliens, opportunistAliens, alliedAliens);
 
-        // Envoi des statistiques via Camel au service de détection
+
+        // Envoi des statistiques via Camel
         producerTemplate.sendBody("direct:sendAlienStats", statsJson);
     }
+
 
     // Méthode pour récupérer les statistiques des aliens générés
     public String getAlienStats() {
@@ -69,3 +82,4 @@ public class AlienGateway {
                 totalAliens, hostileAliens, opportunistAliens, alliedAliens);
     }
 }
+
