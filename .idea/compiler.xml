@@ -6,23 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="soldat-service" />
+        <module name="champ-de-bataille--service" />
         <module name="alien-service" />
-        <module name="detection-service" />
-        <module name="boss-service" />
         <module name="medecin-service" />
         <module name="arsenal-service" />
+        <module name="soldat-service" />
+        <module name="detection-service" />
+        <module name="boss-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="champ-de-bataille--service" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="alien-service" options="-parameters" />
       <module name="arsenal-service" options="-parameters" />
       <module name="boss-service" options="-parameters" />
+      <module name="champ-de-bataille--service" options="-parameters" />
       <module name="champdebataille-service" options="-parameters" />
       <module name="detection-service" options="-parameters" />
       <module name="medecin-service" options="-parameters" />

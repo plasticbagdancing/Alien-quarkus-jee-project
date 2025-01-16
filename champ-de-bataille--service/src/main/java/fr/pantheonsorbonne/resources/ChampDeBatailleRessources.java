@@ -7,7 +7,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.net.URI;
 
 
 @Path("champDeBataille")
@@ -17,6 +16,7 @@ public class ChampDeBatailleRessources {
 
     private final ChampDeBatailleService champDeBatailleService;
 
+    @Inject
     public ChampDeBatailleRessources(ChampDeBatailleService champDeBatailleService) {
         this.champDeBatailleService = champDeBatailleService;
     }
