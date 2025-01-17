@@ -27,7 +27,7 @@ public class AlienGateway {
                 "GRN-" + (int) (Math.random() * 1000)  // Numéro d'enregistrement aléatoire
         );
 
-        producerTemplate.sendBody("direct:sendAlien", alien);
+        producerTemplate.sendBody("direct:sendAlien", getAlienStats());
 
         // Mise à jour des compteurs
         totalAliens++;

@@ -5,5 +5,4 @@ public record ChampDeBatailleDTO(
         int nombreMorts,
         int nombreBlesses
 ) {
-
 }
