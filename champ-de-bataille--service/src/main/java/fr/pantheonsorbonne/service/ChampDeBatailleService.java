@@ -27,6 +27,7 @@ public class ChampDeBatailleService {
             throw new RuntimeException("Champ de bataille non trouvé !");
         }
         return toDTO(champDeBataille);
+<<<<<<< HEAD
     }
 
     @Transactional
@@ -66,5 +67,44 @@ public class ChampDeBatailleService {
         champDeBataille.setNombreMorts(dto.nombreMorts());
         champDeBataille.setNombreBlesses(dto.nombreBlesses());
         return champDeBataille;
+=======
     }
+    @Transactional
+    public void create(ChampDeBatailleDTO dto) {
+        ChampDeBataille champDeBataille = toEntity(dto);
+        champDeBatailleDAO.save(champDeBataille);
+    }
+
+    @Transactional
+    public void update(Long id, ChampDeBatailleDTO dto) {
+        ChampDeBataille existing = champDeBatailleDAO.findById(id);
+        if (existing == null) {
+            throw new RuntimeException("Champ de bataille non trouvé !");
+        }
+        existing.setEtat(dto.etat());
+        existing.setNombreMorts(dto.nombreMorts());
+        existing.setNombreBlesses(dto.nombreBlesses());
+        champDeBatailleDAO.update(existing);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        champDeBatailleDAO.delete(id);
+>>>>>>> b944f671ba76cc20ba9e071eda0b18899a79cb3e
+    }
+    private ChampDeBatailleDTO toDTO(ChampDeBataille champDeBataille) {
+        return new ChampDeBatailleDTO(
+                champDeBataille.getEtat(),
+                champDeBataille.getNombreMorts(),
+                champDeBataille.getNombreBlesses()
+        );
+    }
+
+    private ChampDeBataille toEntity(ChampDeBatailleDTO dto) {
+        ChampDeBataille champDeBataille = new ChampDeBataille();
+        champDeBataille.setEtat(dto.etat());
+        champDeBataille.setNombreMorts(dto.nombreMorts());
+        champDeBataille.setNombreBlesses(dto.nombreBlesses());
+        return champDeBataille;
+}
 }
