@@ -8,6 +8,9 @@ import fr.pantheonsorbonne.exception.InvalidBossException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.ProducerTemplate;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class BossService {
@@ -35,4 +38,12 @@ public class BossService {
         bossDAO.saveBoss(boss);
         return boss.getId();
     }
+
+    @Inject
+    ProducerTemplate producerTemplate;
+
+    public void processBossNotification(String message) {
+        System.out.println("Notification reçue pour le Boss: " + message);
+    }
+
 }

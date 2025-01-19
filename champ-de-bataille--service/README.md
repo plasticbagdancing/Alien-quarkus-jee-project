@@ -1,71 +1,49 @@
-# champ-de-bataille--service
+# Système de Défense de Station Spatiale
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Objectif du Système à Modéliser
+Modéliser un système de gestion pour organiser la défense d'une station spatiale contre des attaques extraterrestres.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+Le système permettra :
+- De détecter les attaques extraterrestres et se défendre efficacement.
+- D’assigner des rôles stratégiques aux habitants (défense et soins).
+- De gérer les ressources (armes, soldats, soins) de manière optimale.
 
-## Running the application in dev mode
+---
 
-You can run your application in dev mode that enables live coding using:
+## Scénario : *"Colonie Perdue"*
+Dans un futur proche, une colonie humaine s’est installée sur une planète lointaine, **Cybertron**, pour exploiter ses ressources. Les tensions montent lorsqu’une race extraterrestre, les **Mucucu**, revendique la planète comme leur territoire ancestral.  
+Une nuit, la colonie subit une attaque brutale, forçant le commandant **Boss** à agir et les soldats à se défendre.
 
-```shell script
-./mvnw quarkus:dev
-```
+---
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## Règles Métier
 
-## Packaging and running the application
+**R1** : Les Aliens sont générés aléatoirement par type (*hostile*, *neutre*, *amical*) et assignés à des salles spécifiques dans le champ de bataille.
 
-The application can be packaged using:
+**R2** : Les informations sur les Aliens sont collectées par le champ de bataille et transmises au radar.
 
-```shell script
-./mvnw package
-```
+**R3** : Le radar transmet ces informations à Détection, qui doit notifier le Boss dans un délai maximal de 20 secondes.
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+**R4** : Si le message contient `Nombre_total_aliens > Seuil_critique` ou `Type_alien_dangereux` détecté, le Boss :
+- Envoie des soldats spécifiques.
+- Interagit avec l’arsenal pour demander et construire des armes adaptées.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+**R5** : Logique de construction des armes :
+- En fonction du type et du nombre d’Aliens, le Boss détermine les besoins en armes.
 
-If you want to build an _über-jar_, execute the following command:
+| Type d'Alien   | Type d'Armes       | Temps de Fabrication |
+|----------------|-------------------|---------------------|
+| Hostiles       | Armes lourdes     | 10 secondes         |
+| Neutres        | Armes standards   | 5 secondes          |
+| Amicaux        | Armes non-létales | 3 secondes          |
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+**R6** : Interaction avec les soldats  
+Le Boss attribue des rôles selon l'expérience des soldats :
+- Les soldats expérimentés reçoivent des armes lourdes et sont envoyés contre les Aliens Hostiles.
+- Les soldats débutants reçoivent des armes standards et sont affectés à des Aliens Neutres ou Amicaux.
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+**R7** : À la fin de la bataille, le champ de bataille envoie un rapport au Boss contenant :
+- Le nombre de morts.
+- Le nombre de blessés.
 
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/champ-de-bataille--service-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- Hibernate ORM ([guide](https://quarkus.io/guides/hibernate-orm)): Define your persistent model with Hibernate ORM and Jakarta Persistence
-- Artemis JMS ([guide](https://docs.quarkiverse.io/quarkus-artemis/dev/index.html)): Use JMS APIs to connect to ActiveMQ Artemis via its native protocol
-- Camel JacksonXML ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/jacksonxml.html)): Unmarshal an XML payloads to POJOs and back using XMLMapper extension of Jackson
-- Camel Simple JMS2 ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/sjms2.html)): Send and receive messages to/from a JMS Queue or Topic using plain JMS 2.x API
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-- Camel File ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/file.html)): Read and write files
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- Camel Core ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/core.html)): Camel core functionality and basic Camel languages: Constant, ExchangeProperty, Header, Ref, Simple and Tokenize
-- JDBC Driver - MariaDB ([guide](https://quarkus.io/guides/datasource)): Connect to the MariaDB database via JDBC
-- Camel CSV ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/csv.html)): Handle CSV (Comma Separated Values) payloads
-- Camel Jackson ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/jackson.html)): Marshal POJOs to JSON and back using Jackson
-- Camel Direct ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/direct.html)): Call another endpoint from the same Camel Context synchronously
-- Camel Bean ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/bean.html)): Invoke methods of Java beans
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
+**R8** : Les soldats blessés sont envoyés chez les médecins pour être soignés en 20 secondes.
