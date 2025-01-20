@@ -7,13 +7,11 @@ public class CamelRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        // Route du Champ de Bataille vers le Boss
-        from("direct:champDeBatailleResult")
-                .routeId("champDeBatailleToBossRoute")
-                .log("Envoi du message au Boss: ${body}")
-                .to("direct:bossNotification");
-    }
+        /* Configuration des routes pour capter les messages du radar et notifier le Boss.
+                Route pour filtrer les messages selon les types d'aliens et les seuils critiques, utilisant un pattern de Message Filter.
+        Route pour publier les messages vers les systèmes de soldats et d'arsenal via un Publish-Subscribe. */
 
+    }
 }
 
 

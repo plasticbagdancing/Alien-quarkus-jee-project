@@ -28,7 +28,6 @@ public class ChampDeBatailleRessources {
     public ChampDeBatailleDTO getById(@PathParam("id") Long id) {
         return service.getById(id);
     }
-
     @POST
     public Response create(ChampDeBatailleDTO dto) {
         service.create(dto);
@@ -41,19 +40,11 @@ public class ChampDeBatailleRessources {
         service.update(id, dto);
         return Response.ok().build();
     }
-
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
-    }
-
-    @POST
-    @Path("/notify/{bossId}/{champId}")
-    public Response notifyBoss(@PathParam("bossId") Long bossId, @PathParam("champId") Long champDeBatailleId) {
-        service.notifyBossOfBattleResult(bossId, champDeBatailleId);
-        return Response.ok("Notification envoyée.").build();
-    }
-
 }
+}
+

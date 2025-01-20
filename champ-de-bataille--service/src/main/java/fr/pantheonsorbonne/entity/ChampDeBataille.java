@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "champ_de_bataille")
-public class ChampDeBataille {
 
+public class ChampDeBataille {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,5 +50,6 @@ public class ChampDeBataille {
 
     public void setNombreBlesses(int nombreBlesses) {
         this.nombreBlesses = nombreBlesses;
-    }
 }
+}
+

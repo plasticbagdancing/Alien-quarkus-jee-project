@@ -8,20 +8,12 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.camel.ProducerTemplate;
-
 
 @ApplicationScoped
 public class ChampDeBatailleService {
 
     @Inject
     ChampDeBatailleDAO champDeBatailleDAO;
-
-    @Inject
-    BossService bossService;
-
-    @Inject
-    ProducerTemplate producerTemplate;
 
     public List<ChampDeBatailleDTO> getAll() {
         return champDeBatailleDAO.findAll().stream()
@@ -36,7 +28,6 @@ public class ChampDeBatailleService {
         }
         return toDTO(champDeBataille);
     }
-
     @Transactional
     public void create(ChampDeBatailleDTO dto) {
         ChampDeBataille champDeBataille = toEntity(dto);
@@ -59,7 +50,6 @@ public class ChampDeBatailleService {
     public void delete(Long id) {
         champDeBatailleDAO.delete(id);
     }
-
     private ChampDeBatailleDTO toDTO(ChampDeBataille champDeBataille) {
         return new ChampDeBatailleDTO(
                 champDeBataille.getEtat(),
@@ -74,25 +64,5 @@ public class ChampDeBatailleService {
         champDeBataille.setNombreMorts(dto.nombreMorts());
         champDeBataille.setNombreBlesses(dto.nombreBlesses());
         return champDeBataille;
-    }
-
-
-    @Transactional
-    public void notifyBossOfBattleResult(Long bossId, Long champDeBatailleId) {
-        ChampDeBataille champDeBataille = champDeBatailleDAO.findById(champDeBatailleId);
-        if (champDeBataille == null) {
-            throw new RuntimeException("Champ de bataille non trouvé !");
-        }
-
-        String message = String.format(
-                "Résultat de la bataille: %d morts, %d blessés.",
-                champDeBataille.getNombreMorts(),
-                champDeBataille.getNombreBlesses()
-        );
-
-
-        System.out.println("Notification envoyée au Boss : " + message);
-        producerTemplate.sendBody("direct:champDeBatailleResult", message);
-    }
-
+}
 }

@@ -19,7 +19,6 @@ public class ChampDeBatailleDAO {
     public ChampDeBataille findById(Long id) {
         return entityManager.find(ChampDeBataille.class, id);
     }
-
     public void save(ChampDeBataille champDeBataille) {
         entityManager.persist(champDeBataille);
     }
@@ -32,6 +31,6 @@ public class ChampDeBatailleDAO {
         ChampDeBataille champDeBataille = findById(id);
         if (champDeBataille != null) {
             entityManager.remove(champDeBataille);
-        }
-    }
+}
+}
 }
