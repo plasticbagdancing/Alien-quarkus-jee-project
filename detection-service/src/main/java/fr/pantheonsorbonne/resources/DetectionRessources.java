@@ -25,7 +25,6 @@ public class DetectionRessources {
         Detection detection = new Detection();
         detection.setIdAlerte(detectionDTO.idAlerte());
         detection.setDatetime(detectionDTO.datetime());
-        detection.setIdRadar(detectionDTO.idRadar());
         detection.setNbAliens(detectionDTO.nbAliens());
         detection.setMessage(detectionDTO.message());
 

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class Detection {
     private int idAlerte;
     private LocalDateTime datetime;
-    private int idRadar;
     private int nbAliens;
     private String message;
 
@@ -26,13 +25,6 @@ public class Detection {
         this.datetime = datetime;
     }
 
-    public int getIdRadar() {
-        return idRadar;
-    }
-
-    public void setIdRadar(int idRadar) {
-        this.idRadar = idRadar;
-    }
 
     public int getNbAliens() {
         return nbAliens;

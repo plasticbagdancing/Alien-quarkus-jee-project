@@ -13,11 +13,11 @@ public class CamelRoutes extends RouteBuilder {
                 .log("Alien envoyé avec succès : ${body}");
 
 
-        // Route pour envoyer les statistiques au Champ-de-Bataille
+        // Route pour envoyer les statistiques a detection
         from("direct:sendAlienStats")
                 .log("Envoi des statistiques au Champ-de-Bataille")
-                .marshal().json()
-                .to("sjms2:M1.BattlefieldStatsService")  // Service Champ-de-Bataille pour les statistiques
+
+                .to("sjms2:M1.BattlefieldStatsService")  // Service detection pour les statistiques
                 .log("Statistiques envoyées avec succès : ${body}");
 
     }

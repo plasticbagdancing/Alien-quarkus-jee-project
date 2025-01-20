@@ -6,6 +6,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.ProducerTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @ApplicationScoped
 public class AlienGateway {
@@ -24,19 +27,14 @@ public class AlienGateway {
     // Méthode pour générer plusieurs aliens avec un minimum de 100 par type
     public void sendRandomAlien() {
         // Nombre d'aliens à générer par appel
-        int numberOfAliensToGenerate = 100;  // Modifier ce nombre selon votre besoin (150, etc.)
-
+        int numberOfAliensToGenerate = 100;  // Modifier ce nombre selon votre besoin (150, etc.
 
         String[] types = {"hostile", "opportunist", "allied"};
 
-
-<<<<<<< HEAD
         producerTemplate.sendBody("direct:sendAlien", getAlienStats());
-=======
+
         for (int i = 0; i < numberOfAliensToGenerate; i++) {
             String alienType = types[(int) (Math.random() * types.length)];  // Choisir un type d'alien aléatoire
->>>>>>> b944f671ba76cc20ba9e071eda0b18899a79cb3e
-
 
             AlienDTO alien = new AlienDTO(
                     (long) (Math.random() * 1000),  // ID aléatoire
@@ -69,16 +67,17 @@ public class AlienGateway {
     }
 
 
-    private void sendAlienStatsToBattlefield() {
-        // Création d'un JSON avec les statistiques
-        String statsJson = String.format("{\"totalAliens\": %d, \"hostile\": %d, \"opportunist\": %d, \"allied\": %d}",
-                totalAliens, hostileAliens, opportunistAliens, alliedAliens);
+    public void sendAlienStatsToBattlefield() {
+        // Création d'un Map avec les statistiques
+        Map<String, Integer> stats = new HashMap<>();
+        stats.put("totalAliens", totalAliens);
+        stats.put("hostile", hostileAliens);
+        stats.put("opportunist", opportunistAliens);
+        stats.put("allied", alliedAliens);
 
-
-        // Envoi des statistiques via Camel
-        producerTemplate.sendBody("direct:sendAlienStats", statsJson);
+        // Envoi des statistiques via Camel, en envoyant directement le Map
+        producerTemplate.sendBody("direct:sendAlienStats", stats);
     }
-
 
     // Méthode pour récupérer les statistiques des aliens générés
     public String getAlienStats() {

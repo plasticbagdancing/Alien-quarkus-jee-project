@@ -37,9 +37,6 @@ public class AlienRessources {
 
 
 
-
-
-
     // retourner un alien
     @GET
     @Path("{id}")
