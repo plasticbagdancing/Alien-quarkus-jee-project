@@ -15,6 +15,13 @@ public class CamelRoutes extends RouteBuilder {
                 .log("Message reçu du champ de bataille : ${body}") // Log pour afficher ce qu'on reçoit
                 .bean(DetectionService.class, "enregistrer") // Appel de la méthode handleDetection dans DetectionService
                 .log("Message traité et sauvegardé dans la base de données.");
+
+        from("direct:sendDetections")
+                .log("Envoi de la détection au boss : ${body}")
+                .marshal().json() // Convertit l'objet en JSON
+                .convertBodyTo(String.class) // Force la conversion en texte brut
+                .to("sjms2:M1.bossService") // Envoie le message
+                .log("Détection envoyée avec succès au service boss : ${body}");
     }
 
 }

@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.resources;
 
 import fr.pantheonsorbonne.dto.DetectionDTO;
 import fr.pantheonsorbonne.entity.Detection;
+import fr.pantheonsorbonne.gateway.DetectionGateway;
 import fr.pantheonsorbonne.service.DetectionService;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -16,6 +17,9 @@ import java.time.LocalDateTime;
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class DetectionRessources {
+
+    @Inject
+    DetectionGateway detectionGateway;
 
     @Inject
     private DetectionService detectionService;
@@ -36,4 +40,24 @@ public class DetectionRessources {
     public Response getAllDetections() {
         return Response.ok(detectionService.getAllDetections()).build();
     }
+
+
+    @GET
+    @Path("/sendDetections")
+    public Response sendDetections() {
+        try {
+            detectionGateway.sendDetections();
+            // Renvoie une réponse JSON avec un message de succès
+            return Response.ok("{\"message\": \"La détection a été envoyée avec succès.\"}")
+                    .header("Content-Type", "application/json")
+                    .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("{\"message\": \"Erreur lors de l'envoi de la détection : " + e.getMessage() + "\"}")
+                    .header("Content-Type", "application/json")
+                    .build();
+        }
+    }
+
+
 }

@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,4 +107,13 @@ public class DetectionService {
     public List<Detection> getAllDetections() {
         return detectionDAO.findAll();
     }
+
+    public Detection getLastDetection() {
+        // Récupère toutes les détections, triées par datetime décroissant
+        return detectionDAO.findAll()
+                .stream()
+                .max(Comparator.comparing(Detection::getDatetime)) // Trouve la détection avec la date la plus récente
+                .orElse(null); // Renvoie null si aucune détection n'est trouvée
+    }
+
 }

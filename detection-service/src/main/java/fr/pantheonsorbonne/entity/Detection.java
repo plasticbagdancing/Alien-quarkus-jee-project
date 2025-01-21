@@ -41,4 +41,14 @@ public class Detection {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "Detection{" +
+                "idAlerte=" + idAlerte +
+                ", datetime=" + datetime +
+                ", nbAliens=" + nbAliens +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
