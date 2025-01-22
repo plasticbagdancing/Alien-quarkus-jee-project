@@ -4,7 +4,6 @@ import fr.pantheonsorbonne.entity.Boss;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-
 @ApplicationScoped
 public class BossDAO {
     @Inject
@@ -14,12 +13,10 @@ public class BossDAO {
                 .setParameter("galacticRegistrationNumberBoss", bossGalacticRegistrationNumberBoss)
                 .getResultList().isEmpty();
     }
-
     public void saveBoss(Boss boss) {
         grnb.persist(boss);
 
     }
-
     public Boss getById(Long id) {
         return grnb.find(Boss.class, id);
     }

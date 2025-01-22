@@ -1,14 +1,15 @@
 package fr.pantheonsorbonne.service;
 
 import fr.pantheonsorbonne.dao.ChampDeBatailleDAO;
+import fr.pantheonsorbonne.dto.AlienDTO;
 import fr.pantheonsorbonne.dto.ChampDeBatailleDTO;
+import fr.pantheonsorbonne.dto.SoldatDTO;
 import fr.pantheonsorbonne.entity.ChampDeBataille;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @ApplicationScoped
 public class ChampDeBatailleService {
 
@@ -57,7 +58,6 @@ public class ChampDeBatailleService {
                 champDeBataille.getNombreBlesses()
         );
     }
-
     private ChampDeBataille toEntity(ChampDeBatailleDTO dto) {
         ChampDeBataille champDeBataille = new ChampDeBataille();
         champDeBataille.setEtat(dto.etat());
@@ -65,4 +65,49 @@ public class ChampDeBatailleService {
         champDeBataille.setNombreBlesses(dto.nombreBlesses());
         return champDeBataille;
 }
+
+
+    public ChampDeBatailleDTO combattre(List<SoldatDTO> soldats, List<AlienDTO> aliens) {
+        int mortsSoldats = 0;
+        int blessesSoldats = 0;
+        int mortsAliens = 0;
+        int blessesAliens = 0;
+
+
+        for (SoldatDTO soldat : soldats) {
+            for (AlienDTO alien : aliens) {
+                boolean combatGagne = false;
+
+                //Combats entre experts et opportunistes
+                if ("Expert".equals(soldat.categorie()) && "Opportuniste".equals(alien.type())) {
+                    combatGagne = true; // Les experts gagnent
+                }
+                //Combats entre intermédiaires et hostiles
+                else if ("Intermédiaire".equals(soldat.categorie()) && "Hostile".equals(alien.type())) {
+                    combatGagne = true; // Les intermédiaires gagnent
+                }
+                //Combats entre débutants et alliés
+                else if ("Débutant".equals(soldat.categorie()) && "Allied".equals(alien.type())) {
+                    combatGagne = true; // Les débutants gagnent
+                }
+
+                // maj des victimes et les blessés selon le combat
+                if (combatGagne) {
+                    mortsAliens++;  // Alien tué
+                    blessesSoldats++; // Le soldat est blessé
+                } else {
+                    mortsSoldats++;  // Soldat tué
+                    blessesAliens++; // L'alien est blessé
+                }
+            }
+        }
+
+
+        String etat = (mortsAliens > mortsSoldats) ? "Perdu" : "Gagné";
+
+        // Retourner l'état du combat sous forme de DTO
+        return new ChampDeBatailleDTO(etat, mortsSoldats + blessesSoldats, mortsAliens + blessesAliens);
+    }
+
+
 }

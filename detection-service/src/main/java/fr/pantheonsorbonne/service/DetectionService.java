@@ -15,7 +15,7 @@ import java.util.Map;
 
 @ApplicationScoped
 public class DetectionService {
-    // Compteur statique pour l'idAlerte (incrémenté à chaque nouvelle détection)
+
     private static int idAlerteCounter = 1;
 
     @Inject
@@ -32,7 +32,7 @@ public class DetectionService {
 
     public void handleDetection(Detection detection) {
         detectionDAO.save(detection);
-//        // Logique métier pour gérer les alertes critiques
+
 //        int seuilCritique = 100;
 //        if (detection.getNbAliens() > seuilCritique || detection.getMessage().contains("Type_alien_dangereux")) {
 //            System.out.println("CRITIQUE : Notifier le boss pour riposter.");
@@ -57,41 +57,33 @@ public class DetectionService {
 
 
     public void enregistrer(String jsonMessage) {
-        // Créer une instance de Detection
+
         Detection detection = new Detection();
 
         // Attribuer l'ID d'alerte unique (incrémentation)
         detection.setIdAlerte(idAlerteCounter++);
 
-        // Date actuelle pour la détection
         detection.setDatetime(LocalDateTime.now());
 
-        // Message reçu
         detection.setMessage(jsonMessage);
 
-        // Extraire la Map depuis le message JSON (supposé sous forme de Map<String, Integer>)
         Map<String, Integer> stats = parseJsonToMap(jsonMessage);
 
-        // Si la Map contient une clé "totalAliens", on l'affecte à nbAliens
         if (stats.containsKey("totalAliens")) {
-            detection.setNbAliens(stats.get("totalAliens")); // Stocker totalAliens dans nbAliens
+            detection.setNbAliens(stats.get("totalAliens"));
         } else {
-            detection.setNbAliens(0); // Valeur par défaut si "totalAliens" n'est pas présent
+            detection.setNbAliens(0);
         }
 
-        // Sauvegarder la détection dans la base de données (log pour simulation)
         System.out.println("Detection enregistrée : " + detection.getMessage() + " avec nbAliens : " + detection.getNbAliens());
         handleDetection(detection);
 
-        // Vous pouvez ajouter ici le code pour persister `detection` dans la base de données
     }
 
-    // Méthode simulée pour convertir jsonMessage en Map<String, Integer>
-    // En production, vous pourriez utiliser des outils comme ObjectMapper ou d'autres bibliothèques JSON
+
     private Map<String, Integer> parseJsonToMap(String jsonMessage) {
         Map<String, Integer> stats = new HashMap<>();
 
-        // Exemple de parsing simulé : ici, le jsonMessage serait une chaîne de type "totalAliens=100,hostile=50,..."
         String[] pairs = jsonMessage.replace("{", "").replace("}", "").split(",");
         for (String pair : pairs) {
             String[] keyValue = pair.split("=");
@@ -109,11 +101,11 @@ public class DetectionService {
     }
 
     public Detection getLastDetection() {
-        // Récupère toutes les détections, triées par datetime décroissant
+
         return detectionDAO.findAll()
                 .stream()
-                .max(Comparator.comparing(Detection::getDatetime)) // Trouve la détection avec la date la plus récente
-                .orElse(null); // Renvoie null si aucune détection n'est trouvée
+                .max(Comparator.comparing(Detection::getDatetime))
+                .orElse(null);
     }
 
 }

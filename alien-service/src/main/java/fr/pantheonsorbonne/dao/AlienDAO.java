@@ -1,12 +1,10 @@
 package fr.pantheonsorbonne.dao;
-
 import fr.pantheonsorbonne.entity.Alien;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
-
 public class AlienDAO {
     @Inject
     EntityManager grn;

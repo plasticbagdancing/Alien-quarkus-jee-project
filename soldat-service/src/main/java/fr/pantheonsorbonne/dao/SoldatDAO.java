@@ -5,6 +5,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 @ApplicationScoped
 public class SoldatDAO {
     @Inject
@@ -23,5 +25,10 @@ public class SoldatDAO {
     public Soldat getById(Long id) {
 
         return grns.find(Soldat.class, id);
+    }
+
+    // Méthode pour récupérer tous les soldats
+    public List<Soldat> findAll() {
+        return grns.createQuery("SELECT s FROM Soldat s", Soldat.class).getResultList();
     }
 }

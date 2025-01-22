@@ -5,19 +5,19 @@ public class CamelRoutes extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        // Route pour envoyer un Alien au champ de bataille
+
         from("direct:sendAlien")
                 .log("Envoi d'un Alien au Champ-de-Bataille")
                 .marshal().json()
-                .to("sjms2:M1.BattlefieldService")  // Service Champ-de-Bataille
+                .to("sjms2:M1.BattlefieldService")
                 .log("Alien envoyé avec succès : ${body}");
 
 
-        // Route pour envoyer les statistiques a detection
+
         from("direct:sendAlienStats")
                 .log("Envoi des statistiques au Champ-de-Bataille")
 
-                .to("sjms2:M1.BattlefieldStatsService")  // Service detection pour les statistiques
+                .to("sjms2:M1.BattlefieldStatsService")
                 .log("Statistiques envoyées avec succès : ${body}");
 
     }

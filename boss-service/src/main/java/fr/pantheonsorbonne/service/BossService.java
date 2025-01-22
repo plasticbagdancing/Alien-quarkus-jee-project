@@ -39,11 +39,4 @@ public class BossService {
         return boss.getId();
     }
 
-    @Inject
-    ProducerTemplate producerTemplate;
-
-    public void processBossNotification(String message) {
-        System.out.println("Notification reçue pour le Boss: " + message);
-    }
-
 }

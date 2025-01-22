@@ -21,34 +21,25 @@ public class AlienRessources {
     @GET
     @Path("/generate")
     public Response generateAlien() {
-        alienGateway.sendRandomAlien();  // Appel à la méthode qui génère et envoie l'alien et les stats
+        alienGateway.sendRandomAlien();
         return Response.ok("Aliens générés et envoyés au champ de bataille avec leurs statistiques ").build();
     }
 
 
-    // Endpoint pour récupérer les statistiques des aliens générés
     @GET
     @Path("/stats")
     @Produces("application/json")
     public Response getAlienStats() {
-        String stats = alienGateway.getAlienStats();  // Appel sur l'instance injectée de AlienGateway
+        String stats = alienGateway.getAlienStats();
         return Response.ok(stats).build();
     }
 
 
-
-    // retourner un alien
     @GET
     @Path("{id}")
 
-
-
-
-    // retourner le JSON
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAlienById(@PathParam("id") Long id) {
-
-
         AlienDTO alien = alienservice.getAlienByID(id);
         if (alien == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -57,15 +48,12 @@ public class AlienRessources {
     }
 
 
-
-
-    // créer un alien
     @POST
-    // consumer le JSON
+
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postAlien(AlienDTO alienDTO) {
-        try {Long alienId = alienservice.checkandAlien(alienDTO); // Appel du service
-            return Response.created(URI.create("/Alien/" + alienId)).build();
+        try {Long alienId = alienservice.checkandAlien(alienDTO);
+            return Response.created(URI.create("/alien/" + alienId)).build();
         } catch (AlienAlreadyExistWithTheSameGalacticRegistrationNumber e) {
             throw new WebApplicationException(
                     Response.status(Response.Status.CONFLICT)

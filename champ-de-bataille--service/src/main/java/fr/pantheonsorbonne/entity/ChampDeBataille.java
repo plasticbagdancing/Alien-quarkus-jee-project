@@ -19,7 +19,7 @@ public class ChampDeBataille {
     @Column(name = "nb_blesse", nullable = false)
     private int nombreBlesses;
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

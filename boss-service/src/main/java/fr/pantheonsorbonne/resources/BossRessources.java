@@ -8,17 +8,17 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.apache.camel.ProducerTemplate;
 
 import java.net.URI;
 
-// retourner un Boss
 @Path("boss")
 public class BossRessources {
     @Inject
     BossService bossService;
     @GET
     @Path("{id}")
-    // retourner le JSON
+
     public Response getBossById(@PathParam("id") Long id) {
 
        BossDTO boss = bossService.getBossById(id);
@@ -27,7 +27,7 @@ public class BossRessources {
        }
        return Response.ok(boss).build();
     }
-    // créer un Boss
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postBoss(BossDTO bossDTO){
@@ -40,4 +40,5 @@ public class BossRessources {
             throw new WebApplicationException(Response.status(Response.Status.CONFLICT).build());
         }
     }
+
 }

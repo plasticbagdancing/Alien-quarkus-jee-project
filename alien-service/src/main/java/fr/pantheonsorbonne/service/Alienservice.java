@@ -7,15 +7,11 @@ import fr.pantheonsorbonne.exception.AlienAlreadyExistWithTheSameGalacticRegistr
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
 @ApplicationScoped
-
-
 public class Alienservice {
     @Inject
     AlienDAO alienDAO;
     public AlienDTO getAlienByID(Long id) {
-
         Alien alien = alienDAO.getById(id);
         if(alien == null){
             return null;
@@ -23,7 +19,6 @@ public class Alienservice {
         return new AlienDTO(alien.getId(),alien.getType(),alien.getGalacticRegistrationNumber());
     }
     @Transactional
-
     public Long checkandAlien(AlienDTO alienDTO) throws AlienAlreadyExistWithTheSameGalacticRegistrationNumber {
         // vérification existence
         if (alienDAO.isAlienPresent(alienDTO.galacticRegistrationNumber())){

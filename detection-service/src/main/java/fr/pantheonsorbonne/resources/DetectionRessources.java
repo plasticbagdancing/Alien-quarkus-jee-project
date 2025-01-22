@@ -1,10 +1,8 @@
 package fr.pantheonsorbonne.resources;
-
 import fr.pantheonsorbonne.dto.DetectionDTO;
 import fr.pantheonsorbonne.entity.Detection;
 import fr.pantheonsorbonne.gateway.DetectionGateway;
 import fr.pantheonsorbonne.service.DetectionService;
-
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -41,13 +39,12 @@ public class DetectionRessources {
         return Response.ok(detectionService.getAllDetections()).build();
     }
 
-
     @GET
     @Path("/sendDetections")
     public Response sendDetections() {
         try {
             detectionGateway.sendDetections();
-            // Renvoie une réponse JSON avec un message de succès
+
             return Response.ok("{\"message\": \"La détection a été envoyée avec succès.\"}")
                     .header("Content-Type", "application/json")
                     .build();

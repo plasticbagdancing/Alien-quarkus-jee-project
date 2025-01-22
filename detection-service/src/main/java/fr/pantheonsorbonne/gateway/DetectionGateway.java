@@ -33,7 +33,7 @@ public class DetectionGateway {
 
             //System.out.println(simplifiedDetection);
 
-            // Envoyer le message via Camel
+
             producerTemplate.sendBody("direct:sendDetections", simplifiedDetection);
 
             //System.out.println("La détection a été envoyée avec succès.");

@@ -9,6 +9,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @ApplicationScoped
 public class SoldatService {
     @Inject
@@ -22,7 +28,6 @@ public class SoldatService {
         return new SoldatDTO(soldat.getId(),soldat.getNom(),soldat.getCategorie(),soldat.getEtatdesante(), soldat.getGalacticRegistrationNumberS());
     }
     @Transactional
-
     public Long checkAndSaveSoldat(SoldatDTO soldatDTO) throws InvalidSoldatException, SoldatAlredayExistWithTheSameGalacticRegistrationNumberS {
         if (!soldatDTO.categorie().matches("[dDeEiI]")) {
             throw new InvalidSoldatException("categorie is invalid");
@@ -39,9 +44,69 @@ public class SoldatService {
         return soldat.getId();
 
 
-
-
-
-
     }
+
+    @Transactional
+    public List<SoldatDTO> genererSoldats(Map<String, Integer> stats) {
+        List<SoldatDTO> soldats = new ArrayList<>();
+
+        for (int i = 0; i < stats.getOrDefault("experts", 0); i++) {
+            SoldatDTO soldat = creerSoldat("Expert");
+            enregistrerSoldatDansBase(soldat);  // Enregistrer le soldat en base de données
+            soldats.add(soldat);
+        }
+
+        for (int i = 0; i < stats.getOrDefault("intermediates", 0); i++) {
+            SoldatDTO soldat = creerSoldat("Intermédiaire");
+            enregistrerSoldatDansBase(soldat);  // Enregistrer le soldat en base de données
+            soldats.add(soldat);
+        }
+
+        for (int i = 0; i < stats.getOrDefault("beginners", 0); i++) {
+            SoldatDTO soldat = creerSoldat("Débutant");
+            enregistrerSoldatDansBase(soldat);  // Enregistrer le soldat en base de données
+            soldats.add(soldat);
+        }
+
+        return soldats;
+    }
+
+    private SoldatDTO creerSoldat(String categorie) {
+        return new SoldatDTO(
+                null,
+                "Soldat_" + UUID.randomUUID().toString().substring(0, 8),
+                categorie,
+                "En forme",
+                UUID.randomUUID().toString()
+        );
+    }
+
+    @Transactional
+    public void enregistrerSoldatDansBase(SoldatDTO soldatDTO) {
+
+        Soldat soldat = new Soldat();
+        soldat.setNom(soldatDTO.Nom());
+        soldat.setCategorie(soldatDTO.categorie());
+        soldat.setEtatdesante(soldatDTO.etatdesante());
+        soldat.setGalacticRegistrationNumberS(soldatDTO.galacticRegistrationNumberS());
+
+         soldatDAO.saveSoldat(soldat);
+    }
+
+    public List<SoldatDTO> getSoldats() {
+        List<Soldat> soldats = soldatDAO.findAll();
+        return convertToDTO(soldats);
+    }
+
+    private List<SoldatDTO> convertToDTO(List<Soldat> soldats) {
+        return soldats.stream()
+                .map(soldat -> new SoldatDTO(
+                        soldat.getId(),
+                        soldat.getNom(),
+                        soldat.getCategorie(),
+                        soldat.getEtatdesante(),
+                        soldat.getGalacticRegistrationNumberS()))
+                .collect(Collectors.toList());
+    }
+
 }
