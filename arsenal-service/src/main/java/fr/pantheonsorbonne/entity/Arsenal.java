@@ -2,16 +2,15 @@ package fr.pantheonsorbonne.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Arsenal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
-    private String type;
+    private String Type;
     private Integer duration;
     private Integer quantity;
 
@@ -22,13 +21,12 @@ public class Arsenal {
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getType() {
-        return type;
+        return Type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.Type = type;
     }
 
     public Integer getDuration() {
